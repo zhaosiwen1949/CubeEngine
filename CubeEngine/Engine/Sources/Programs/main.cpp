@@ -17,6 +17,8 @@ int main(int argc, const char * argv[]) {
     app->Initialize();
     
     // 加载场景
+//    app->getWorld()->LoadScene("Asset/Scenes/aili_cycle.fbx");
+    app->GetWorld()->initExample();
     
     // 开始渲染循环
     app->Run();

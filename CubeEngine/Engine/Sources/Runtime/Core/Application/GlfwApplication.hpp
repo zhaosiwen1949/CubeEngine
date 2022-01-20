@@ -27,17 +27,26 @@ private:
     static GlfwApplication* _mApp;
     
     // 窗口参数
-    GLFWwindow* mWindow;
-    int mWidth = 800;
-    int mHeight = 600;
+    GLFWwindow* _mWindow;
+    
+    // 记录每一帧更新的间隔时间
+    float _deltaTime = 0.0f;
+    float _lastTime = 0.0f;
     
     // 窗口回调参数
-    static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
+    static void _FramebufferSizeCallback(GLFWwindow* window, int width, int height);
+    // 鼠标移动回调参数
+    static bool _firstMouse;
+    static float _lastX;
+    static float _lastY;
+    static void _MouseCallback(GLFWwindow* window, double xpos, double ypos);
+    // 鼠标滚动回调参数
+    static void _ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
     
     // 绑定按键
-    void ProcessInput() const;
+    void _ProcessInput() const;
     // 切换 Buffer
-    void PostHandle() const;
+    void _SwapBuffers() const;
     
 };
 

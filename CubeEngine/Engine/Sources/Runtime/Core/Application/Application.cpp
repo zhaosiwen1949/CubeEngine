@@ -8,16 +8,16 @@
 
 #include "Application.hpp"
 
-int Application:: Initialize() noexcept {
+int Application::Initialize() noexcept {
     // 初始化 World 对象，管理 ECS 系统
-    mWorld = new World(this);
-    int flag = mWorld->Initialize();
+    _mWorld = new World(this);
+    int flag = _mWorld->Initialize();
     
     return flag;
 }
 
 void Application::Render() noexcept{
-    mWorld->Render();
+    _mWorld->Render();
 }
 
 void Application::Run() noexcept{
@@ -28,7 +28,7 @@ void Application::Run() noexcept{
 }
 
 void Application::Finalize() noexcept {
-    mWorld->Finalize();
+    _mWorld->Finalize();
 }
 
 bool Application::IsQuit() noexcept {

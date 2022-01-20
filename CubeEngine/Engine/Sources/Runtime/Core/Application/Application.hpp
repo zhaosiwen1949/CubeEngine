@@ -13,17 +13,20 @@
 
 class Application {
 public:
-    World* mWorld;
-public:
     virtual int     Initialize() noexcept;
     virtual void    Render() noexcept;
     virtual void    Run() noexcept;
     virtual void    Finalize() noexcept;
     virtual void    Quit() noexcept;
     virtual bool    IsQuit() noexcept;
+public:
+    inline World* GetWorld() const {
+        return _mWorld;
+    };
     
 private:
     bool _mQuit = false;
+    World* _mWorld;
 };
 
 #endif /* Application_hpp */
