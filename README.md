@@ -1,9 +1,13 @@
+# 注意
+### 本项目暂时废弃，不再更新，目前会把精力放在新的引擎项目中，主要是采用 Cmake 和 Vulkan 的方式，来实现跨平台和更加现代性的 API
 # CubeEngine
 尝试动手构建一个渲染引擎
 
 主要特点：
-- [ ] ECS 系统
-- [ ] PBR 材质
+- [x] ECS 系统
+- [x] PBR 材质
+  - [x] 材质球 
+  - [ ] IBL 光照
 - [ ] 跨端渲染
 
 # 开发环境搭建
@@ -44,4 +48,9 @@ https://learnopengl-cn.github.io/01%20Getting%20started/02%20Creating%20a%20wind
 将 glad.c 文件添加到项目中
 ![image](https://user-images.githubusercontent.com/13034272/129000848-c61660d9-d2a7-4455-944d-aa31887e31f0.png)
 
+### 配置文件路径
+参考[Xcode 读取代码所在目录txt或文件](https://blog.csdn.net/u010053344/article/details/51379222)
 
+<img width="1680" alt="截屏2022-01-20 下午7 16 14" src="https://user-images.githubusercontent.com/13034272/150329019-224f778d-efb1-436f-ba4d-144791f5a3dd.png">
+<img width="1680" alt="截屏2022-01-20 下午7 16 45" src="https://user-images.githubusercontent.com/13034272/150329025-25114751-98b0-466d-916c-f667e2c3409d.png">
+<img width="1680" alt="截屏2022-01-20 下午7 17 02" src="https://user-images.githubusercontent.com/13034272/150329054-f55f48a2-1785-417b-9d47-7aeb3a5cd347.png">
