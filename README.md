@@ -4,12 +4,13 @@
 # 整体目标
 - [ ] Cmake Project
 - [ ] Vulkan RHI
-- [ ] Scene Graph
 - [ ] GPU Driven Rendering
 - [ ] PBR
 - [ ] Soft Shadow
 - [ ] Compute Shader Culling
 - [ ] Global Lighting
+- [ ] ECS
+- [ ] Render Graph
 
 # 参考项目
 1. https://github.com/google/filament
