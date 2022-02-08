@@ -1,0 +1,221 @@
+[
+{
+    "name": "vulkan",
+    "source": {
+        "type": "git",
+        "url": "https://github.com/KhronosGroup/Vulkan-Headers.git",
+        "revision": "v1.2.178"
+    }
+},
+{
+    "name": "glfw",
+    "source": {
+        "type": "git",
+        "url": "https://github.com/glfw/glfw.git",
+        "revision": "3.3.4"
+    }
+},
+{
+    "name": "glm",
+    "source": {
+        "type": "git",
+        "url": "https://github.com/g-truc/glm.git",
+        "revision": "0.9.9.8"
+    }
+},
+{
+    "name": "imgui",
+    "source": {
+        "type": "git",
+        "url": "https://github.com/ocornut/imgui.git",
+        "revision" : "v1.83"
+    }
+},
+{
+    "name": "stb",
+    "source": {
+        "type": "git",
+        "url": "https://github.com/nothings/stb.git",
+        "revision" : "c9064e317699d2e495f36ba4f9ac037e88ee371a"
+    }
+},
+{
+    "name": "easy_profiler",
+    "source": {
+        "type": "archive",
+        "url": "https://github.com/yse/easy_profiler/releases/download/v2.1.0/easy_profiler-v2.1.0-msvc15-win64.zip",
+        "sha1": "d7b99c2b0e18e4c6f963724c0ff3a852a34b1b07"
+    }
+},
+{
+    "name": "easy_sources",
+    "source": {
+        "type": "archive",
+        "url": "https://github.com/yse/easy_profiler/archive/v2.1.0.zip",
+        "sha1": "4c19019a3ced6b11179d7eabcfd65f463f254e34"
+    }
+},
+{
+    "name": "optick",
+    "source": {
+        "type": "git",
+        "url": "https://github.com/bombomby/optick.git",
+        "revision": "1.3.1.0"
+    }
+},
+{
+    "name": "assimp",
+    "source": {
+        "type": "git",
+        "url": "https://github.com/assimp/assimp.git",
+        "revision": "a9f82dbe0b8a658003f93c7b5108ee4521458a18"
+    }
+},
+{
+    "name": "etc2comp",
+    "source": {
+        "type": "git",
+        "url": "https://github.com/google/etc2comp",
+        "revision": "9cd0f9cae0f32338943699bb418107db61bb66f2"
+    }
+},
+{
+    "name": "taskflow",
+    "source": {
+        "type": "git",
+        "url": "https://github.com/taskflow/taskflow.git",
+        "revision": "v3.1.0"
+    }
+},
+{
+    "name": "meshoptimizer",
+    "source": {
+        "type": "git",
+        "url": "https://github.com/zeux/meshoptimizer",
+        "revision": "v0.16"
+    }
+},
+{
+    "name": "volk",
+    "source": {
+        "type": "git",
+        "url": "https://github.com/zeux/volk.git",
+        "revision": "1.2.170"
+    }
+},
+{
+    "name": "glslang",
+    "source": {
+        "type": "git",
+        "url": "https://github.com/KhronosGroup/glslang.git",
+        "revision": "6fe560f74f472726027e4059692c6eb1e7d972dc"
+    }
+},
+{
+    "name": "poisson-disk-generator",
+    "source": {
+        "type": "git",
+        "url": "https://github.com/corporateshark/poisson-disk-generator"
+    }
+},
+{
+    "name": "glTF-Sample-Models",
+    "source": {
+        "type": "git",
+        "url": "https://github.com/KhronosGroup/glTF-Sample-Models.git"
+    }
+},
+{
+    "name": "gli",
+    "source": {
+        "type": "git",
+        "url": "https://github.com/g-truc/gli.git",
+        "revision": "dd17acf9cc7fc6e6abe9f9ec69949eeeee1ccd82"
+    }
+},
+{
+    "name": "bullet",
+    "source": {
+        "type": "git",
+        "url": "https://github.com/bulletphysics/bullet3.git",
+        "revision": "3.17"
+    }
+},
+{
+    "name": "rapidjson",
+    "source": {
+        "type": "git",
+        "url": "https://github.com/Tencent/rapidjson.git",
+        "revision": "ce81bc9edfe773667a7a4454ba81dac72ed4364c"
+    }
+},
+{
+    "name": "ImGuizmo",
+    "source": {
+        "type": "git",
+         "url": "https://github.com/CedricGuillemet/ImGuizmo",
+         "revision" : "3a676c4efcab65817658d34eebb56cb91663d5ed"
+    }
+},
+{
+    "name": "bistro/PropTextures",
+    "source": {
+        "type": "archive",
+        "url": "https://casual-effects.com/g3d/data10/research/model/bistro/PropTextures",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36"
+    }
+},
+{
+    "name": "bistro/OtherTextures",
+    "source": {
+        "type": "archive",
+        "url": "https://casual-effects.com/g3d/data10/research/model/bistro/OtherTextures",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36"
+    }
+},
+{
+    "name": "bistro/BuildingTextures",
+    "source": {
+        "type": "archive",
+        "url": "https://casual-effects.com/g3d/data10/research/model/bistro/BuildingTextures",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36"
+    }
+},
+{
+    "name": "bistro/Interior",
+    "source": {
+        "type": "archive",
+        "url": "https://casual-effects.com/g3d/data10/research/model/bistro/Interior.zip",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36"
+    }
+},
+{
+    "name": "bistro/Exterior",
+    "source": {
+        "type": "archive",
+        "url": "https://casual-effects.com/g3d/data10/research/model/bistro/Exterior.zip",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36"
+    }
+},
+{
+    "name": "explosion0",
+    "source": {
+        "type": "archive",
+        "url": "https://unity3d.com/files/labs/downloads/vfx/assets01/Explosion00/Explosion00-sequence-tga.zip"
+    }
+},
+{
+    "name": "explosion1",
+    "source": {
+        "type": "archive",
+        "url": "https://unity3d.com/files/labs/downloads/vfx/assets01/Explosion01/Explosion01-sequence-tga.zip"
+    }
+},
+{
+    "name": "explosion2",
+    "source": {
+        "type": "archive",
+        "url": "https://unity3d.com/files/labs/downloads/vfx/assets01/Explosion02/Explosion02-sequence-tga.zip"
+    }
+}
+]

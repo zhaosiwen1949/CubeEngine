@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/ImGuizmo" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/assimp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/bullet" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/etc2comp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/glTF-Sample-Models" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/glfw" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/gli" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/glm" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/glslang" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/imgui" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/meshoptimizer" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/optick" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/poisson-disk-generator" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/poisson-disk-generator/argh" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/rapidjson" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/rapidjson/thirdparty/gtest" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/stb" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/taskflow" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/volk" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/deps/src/vulkan" vcs="Git" />
+  </component>
+</project>

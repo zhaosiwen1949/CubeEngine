@@ -12,6 +12,10 @@
 - [ ] ECS
 - [ ] Render Graph
 
+# 项目配置
+对于 MacOS 系统，由于底层使用的是 MoltenVK，需要做以下兼容设置
+1. 设置环境变量 MVK_CONFIG_USE_METAL_ARGUMENT_BUFFERS=1，同时使用 Intel 的集显，才能使用 texture array；
+
 # 参考项目
 1. https://github.com/google/filament
 2. https://github.com/openscenegraph/OpenSceneGraph

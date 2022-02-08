@@ -1,0 +1,23 @@
+<component name="ProjectDictionaryState">
+  <dictionary name="deertuliang">
+    <words>
+      <w>assimp</w>
+      <w>deps</w>
+      <w>glfw</w>
+      <w>glslang</w>
+      <w>gltf</w>
+      <w>guizmo</w>
+      <w>hlsl</w>
+      <w>imgui</w>
+      <w>meshopt</w>
+      <w>meshoptimizer</w>
+      <w>optick</w>
+      <w>rapidjson</w>
+      <w>remapper</w>
+      <w>spirv</w>
+      <w>taskflow</w>
+      <w>volk</w>
+      <w>zlibstatic</w>
+    </words>
+  </dictionary>
+</component>
