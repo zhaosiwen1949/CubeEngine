@@ -21,7 +21,7 @@ struct MyApp: public CameraApp
 	, imgui(ctx_)
 	, triangleRenderer(ctx_)
 	{
-//		onScreenRenderers_.emplace_back(plane, false);
+//		onScreenRenderers_.emplace_back(plane);
 //		onScreenRenderers_.emplace_back(multiRenderer);
 //		onScreenRenderers_.emplace_back(imgui, false);
 

@@ -13,5 +13,9 @@ struct TriangleRenderer: public Renderer {
 
     void fillCommandBuffer(VkCommandBuffer cmdBuffer, size_t currentImage, VkFramebuffer fb = VK_NULL_HANDLE, VkRenderPass rp = VK_NULL_HANDLE) override;
     void updateBuffers(size_t currentImage) override;
+
+private:
+    std::vector<VulkanBuffer> indirect_;
+    void updateIndirectBuffers(size_t currentImage);
 };
 
