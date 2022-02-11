@@ -10,12 +10,51 @@ TriangleRenderer::TriangleRenderer(
     // 2、初始化 buffer
     const size_t imgCount = ctx.vkDev.swapchainImages.size();
     indirect_.resize(imgCount);
+    uniforms_.resize(imgCount);
+    descriptorSets_.resize(imgCount);
 
+    // 更新 IndirectDrawCmd
     const uint32_t indirectDataSize = (uint32_t)sizeof(VkDrawIndirectCommand);
 
     for (size_t i = 0; i != imgCount; i++) {
+        // 更新 IndirectDrawCmd 数据
         indirect_[i] = ctx.resources.addIndirectBuffer(indirectDataSize);
         updateIndirectBuffers(i);
+    }
+
+    // 更新顶点数组
+//    const std::vector<float> vertices = {
+//            1.0, 0.0, 0.0, 0.0,
+//            0.0, 1.0, 0.0, 0.0,
+//            0.0, 0.0, 1.0, 0.0,
+//    };
+    const std::vector<float> vertices = {
+            0.0, -0.5,
+            0.5, 0.5,
+            -0.5, 0.5,
+    };
+    const uint32_t vertexBufferSize = (uint32_t)(vertices.size() * sizeof(float));
+    VulkanBuffer vertexStorage = ctx.resources.addStorageBuffer(vertexBufferSize);
+    uploadBufferData(ctx.vkDev, vertexStorage.memory, 0, vertices.data(), vertexBufferSize);
+
+    const BufferAttachment vertexBuffer = BufferAttachment {
+        .dInfo = { .type = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, .shaderStageFlags = VK_SHADER_STAGE_VERTEX_BIT },
+        .buffer = vertexStorage,
+        .offset = 0,
+        .size = vertexBufferSize,
+    };
+
+    DescriptorSetInfo dsInfo = {
+            .buffers = {
+                    vertexBuffer,
+            },
+    };
+    descriptorSetLayout_ = ctx.resources.addDescriptorSetLayout(dsInfo);
+    descriptorPool_ = ctx.resources.addDescriptorPool(dsInfo, (uint32_t)imgCount);
+
+    for (size_t i = 0; i != imgCount; i++) {
+        descriptorSets_[i] = ctx.resources.addDescriptorSet(descriptorPool_, descriptorSetLayout_);
+        ctx.resources.updateDescriptorSet(descriptorSets_[i], dsInfo);
     }
 
     // 3、初始化 pipeline

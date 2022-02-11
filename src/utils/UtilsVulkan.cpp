@@ -307,7 +307,8 @@ VkResult createDevice(VkPhysicalDevice physicalDevice, VkPhysicalDeviceFeatures 
 {
 	const std::vector<const char*> extensions =
 	{
-		VK_KHR_SWAPCHAIN_EXTENSION_NAME
+		VK_KHR_SWAPCHAIN_EXTENSION_NAME,
+        "VK_KHR_portability_subset",
 	};
 
 	const float queuePriority = 1.0f;
@@ -343,7 +344,8 @@ VkResult createDeviceWithCompute(VkPhysicalDevice physicalDevice, VkPhysicalDevi
 {
 	const std::vector<const char*> extensions =
 	{
-		VK_KHR_SWAPCHAIN_EXTENSION_NAME
+		VK_KHR_SWAPCHAIN_EXTENSION_NAME,
+        "VK_KHR_portability_subset",
 	};
 
 	if (graphicsFamily == computeFamily)
@@ -396,6 +398,7 @@ VkResult createDevice2(VkPhysicalDevice physicalDevice, VkPhysicalDeviceFeatures
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME,
 		VK_KHR_MAINTENANCE3_EXTENSION_NAME,
 		VK_EXT_DESCRIPTOR_INDEXING_EXTENSION_NAME,
+        "VK_KHR_portability_subset",
 		// for legacy drivers Vulkan 1.1
 		// VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME
 	};
@@ -436,6 +439,7 @@ VkResult createDevice2WithCompute(VkPhysicalDevice physicalDevice, VkPhysicalDev
 		VK_KHR_SWAPCHAIN_EXTENSION_NAME,
 		VK_KHR_MAINTENANCE3_EXTENSION_NAME,
 		VK_EXT_DESCRIPTOR_INDEXING_EXTENSION_NAME,
+        "VK_KHR_portability_subset",
 		// for legacy drivers Vulkan 1.1
 		// VK_KHR_DRAW_INDIRECT_COUNT_EXTENSION_NAME
 	};
@@ -864,7 +868,8 @@ bool initVulkanRenderDevice3(VulkanInstance& vk, VulkanRenderDevice& vkDev, uint
 
     VkPhysicalDeviceDescriptorIndexingFeaturesEXT physicalDeviceDescriptorIndexingFeatures = {
 		.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT,
-		.pNext = &physicalDeviceVulkan11Features,
+//		.pNext = &physicalDeviceVulkan11Features,
+        .pNext = nullptr,
 		.shaderSampledImageArrayNonUniformIndexing = VK_TRUE,
 		.descriptorBindingVariableDescriptorCount = VK_TRUE,
 		.runtimeDescriptorArray = VK_TRUE,
@@ -2803,6 +2808,21 @@ VulkanContextCreator::VulkanContextCreator(VulkanInstance& vk, VulkanRenderDevic
 
 	if (!initVulkanRenderDevice3(vk, dev, screenWidth, screenHeight, ctxFeatures))
 		exit(0);
+
+	// 获取设备信息
+//    VkPhysicalDeviceProperties2KHR device_properties{};
+//    VkPhysicalDeviceDescriptorIndexingPropertiesEXT descriptor_indexing_properties{};
+//
+//    descriptor_indexing_properties.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES_EXT;
+//    device_properties.sType              = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2_KHR;
+//    device_properties.pNext              = &descriptor_indexing_properties;
+//    vkGetPhysicalDeviceProperties2KHR(vkDev.physicalDevice, &device_properties);
+//    printf("获取 GPU 设备特性");
+    VkPhysicalDeviceFeatures2KHR physical_device_features{VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2_KHR};
+    VkPhysicalDeviceDescriptorIndexingFeaturesEXT extension{VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT};
+    physical_device_features.pNext = &extension;
+    vkGetPhysicalDeviceFeatures2KHR(vkDev.physicalDevice, &physical_device_features);
+    auto a = VK_TRUE;
 }
 
 VulkanContextCreator::~VulkanContextCreator()

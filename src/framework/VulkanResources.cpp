@@ -528,28 +528,46 @@ VkPipeline VulkanResources::addPipeline(VkRenderPass renderPass, VkPipelineLayou
 
 VkDescriptorSetLayout VulkanResources::addDescriptorSetLayout(const DescriptorSetInfo& dsInfo)
 {
-	VkDescriptorSetLayout descriptorSetLayout;
+    std::vector<VkDescriptorBindingFlagsEXT> flags;
+
+    VkDescriptorSetLayout descriptorSetLayout;
 
 	uint32_t bindingIdx = 0;
 
 	std::vector<VkDescriptorSetLayoutBinding> bindings;
 
 	for (const auto& b: dsInfo.buffers) {
+        flags.push_back(0u);
 		bindings.push_back(descriptorSetLayoutBinding(bindingIdx++, b.dInfo.type, b.dInfo.shaderStageFlags));
 	}
 
 	for (const auto& i: dsInfo.textures) {
+        flags.push_back(0u);
 		bindings.push_back(descriptorSetLayoutBinding(bindingIdx++, i.dInfo.type /*VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER*/, i.dInfo.shaderStageFlags));
 	}
 
 	for (const auto& t: dsInfo.textureArrays) {
+        const VkDescriptorBindingFlagsEXT flag =
+                VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT_EXT |
+                VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT_EXT |
+                VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT |
+                VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT_EXT;
+        flags.push_back(flag);
+//        flags.push_back(0u);
 		bindings.push_back(descriptorSetLayoutBinding(bindingIdx++, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, t.dInfo.shaderStageFlags, static_cast<uint32_t>(t.textures.size())));
 	}
 
+    VkDescriptorSetLayoutBindingFlagsCreateInfoEXT binding_flags = {
+            .sType          = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO_EXT,
+            .bindingCount   = static_cast<uint32_t>(flags.size()),
+            .pBindingFlags  = flags.data(),
+    };
+
 	const VkDescriptorSetLayoutCreateInfo layoutInfo = {
 		.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
-		.pNext = nullptr,
+		 .pNext = nullptr,
 		// .flags = 0,
+//		.pNext = &binding_flags,
 		.flags = VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT,
 		.bindingCount = static_cast<uint32_t>(bindings.size()),
 		.pBindings = bindings.size() > 0 ? bindings.data() : nullptr

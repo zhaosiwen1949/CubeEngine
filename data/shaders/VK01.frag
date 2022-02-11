@@ -28,7 +28,7 @@ layout(binding = 9) uniform sampler2D textures[];
 
 void main()
 {
-	 MaterialData md = mat_bo.data[matIdx];
+	MaterialData md = mat_bo.data[matIdx];
 
 	vec4 emission = vec4(0,0,0,0); // md.emissiveColor_;
 	vec4 albedo = md.albedoColor_;

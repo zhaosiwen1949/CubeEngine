@@ -206,8 +206,8 @@ MultiRenderer::MultiRenderer(
 			storageBufferAttachment(sceneData_.material_,    0, (uint32_t)sceneData_.material_.size, VK_SHADER_STAGE_FRAGMENT_BIT),
 			storageBufferAttachment(sceneData_.transforms_,  0, (uint32_t)sceneData_.transforms_.size, VK_SHADER_STAGE_VERTEX_BIT),
 		},
-		.textures = textureAttachments,
-		.textureArrays = { sceneData_.allMaterialTextures }
+//		.textures = textureAttachments,
+//		.textureArrays = { sceneData_.allMaterialTextures }
 	};
 
 	for (const auto& b: auxBuffers)
