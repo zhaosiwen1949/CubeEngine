@@ -16,10 +16,10 @@ struct MyApp: public CameraApp
 	, envMap(ctx_.resources.loadCubeMap("data/piazza_bologni_1k.hdr"))
 	, irrMap(ctx_.resources.loadCubeMap("data/piazza_bologni_1k_irradiance.hdr"))
 	, sceneData(ctx_, "data/meshes/test_graph.meshes", "data/meshes/test_graph.scene", "data/meshes/test_graph.materials", envMap, irrMap)
-//	, plane(ctx_)
+	, plane(ctx_)
 	, multiRenderer(ctx_, sceneData)
-//	, imgui(ctx_)
-//	, triangleRenderer(ctx_)
+	, imgui(ctx_)
+	, triangleRenderer(ctx_)
 	{
 //		onScreenRenderers_.emplace_back(plane, false);
 		onScreenRenderers_.emplace_back(multiRenderer);
@@ -31,17 +31,17 @@ struct MyApp: public CameraApp
 	}
 
 	void drawUI() override {
-//		ImGui::Begin("Information", nullptr);
-//			ImGui::Text("FPS: %.2f", getFPS());
-//		ImGui::End();
-//
-//		ImGui::Begin("Scene graph", nullptr);
-//			int node = renderSceneTree(sceneData.scene_, 0);
-//			if (node > -1)
-//				selectedNode = node;
-//		ImGui::End();
-//
-//		editNode(selectedNode);
+		ImGui::Begin("Information", nullptr);
+			ImGui::Text("FPS: %.2f", getFPS());
+		ImGui::End();
+
+		ImGui::Begin("Scene graph", nullptr);
+			int node = renderSceneTree(sceneData.scene_, 0);
+			if (node > -1)
+				selectedNode = node;
+		ImGui::End();
+
+		editNode(selectedNode);
 	}
 
 	void draw3D() override {
@@ -54,7 +54,7 @@ struct MyApp: public CameraApp
 
 	void update(float deltaSeconds) override
 	{
-//		CameraApp::update(deltaSeconds);
+		CameraApp::update(deltaSeconds);
 
 		// update/upload matrices for individual scene nodes
 		sceneData.recalculateAllTransforms();
@@ -67,10 +67,10 @@ private:
 
 	VKSceneData sceneData;
 
-//	InfinitePlaneRenderer plane;
+	InfinitePlaneRenderer plane;
 	MultiRenderer multiRenderer;
-//	GuiRenderer imgui;
-//    TriangleRenderer triangleRenderer;
+	GuiRenderer imgui;
+    TriangleRenderer triangleRenderer;
 
 	int selectedNode = -1;
 
