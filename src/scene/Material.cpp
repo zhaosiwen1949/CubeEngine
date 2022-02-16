@@ -48,7 +48,7 @@ void saveMaterials(const char* fileName, const std::vector<MaterialDescription>&
 
 void loadMaterials(const char* fileName, std::vector<MaterialDescription>& materials, std::vector<std::string>& files)
 {
-	FILE* f = fopen(fileName, "rb");
+    FILE* f = fopen(fileName, "rb");
 	if (!f) {
 		printf("Cannot load file %s\nPlease run SceneConverter tool from Chapter7\n", fileName);
 		exit(255);
@@ -91,7 +91,7 @@ void mergeMaterialLists(
 		}
 
 	// Lambda to replace textureID by a new "version" (from global list)
-	auto replaceTexture = [&materialToTextureList, &oldTextures, &newTextureNames](int m, uint64_t* textureID) {
+	auto replaceTexture = [&materialToTextureList, &oldTextures, &newTextureNames](int m, uint32_t* textureID) {
 		if (*textureID < INVALID_TEXTURE) {
 			auto listIdx = materialToTextureList[m];
 			auto texList = oldTextures[listIdx];

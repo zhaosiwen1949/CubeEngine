@@ -116,6 +116,55 @@ MaterialDescription convertAIMaterialToDescription(const aiMaterial* M, std::vec
 			D.flags_ |= sMaterialFlags_Transparent;
 	}
 
+	auto count = M->GetTextureCount(aiTextureType_NONE);
+	printf("aiTextureType_NONE: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_DIFFUSE);
+    printf("aiTextureType_DIFFUSE: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_SPECULAR);
+    printf("aiTextureType_SPECULAR: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_AMBIENT);
+    printf("aiTextureType_AMBIENT: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_EMISSIVE);
+    printf("aiTextureType_EMISSIVE: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_HEIGHT);
+    printf("aiTextureType_HEIGHT: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_NORMALS);
+    printf("aiTextureType_NORMALS: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_SHININESS);
+    printf("aiTextureType_SHININESS: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_OPACITY);
+    printf("aiTextureType_OPACITY: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_DISPLACEMENT);
+    printf("aiTextureType_DISPLACEMENT: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_LIGHTMAP);
+    printf("aiTextureType_LIGHTMAP: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_REFLECTION);
+    printf("aiTextureType_REFLECTION: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_BASE_COLOR);
+    printf("aiTextureType_BASE_COLOR: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_NORMAL_CAMERA);
+    printf("aiTextureType_NORMAL_CAMERA: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_EMISSION_COLOR);
+    printf("aiTextureType_EMISSION_COLOR: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_METALNESS);
+    printf("aiTextureType_METALNESS: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_DIFFUSE_ROUGHNESS);
+    printf("aiTextureType_DIFFUSE_ROUGHNESS: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_AMBIENT_OCCLUSION);
+    printf("aiTextureType_AMBIENT_OCCLUSION: %d\n", count);
+    count = M->GetTextureCount(aiTextureType_UNKNOWN);
+    printf("aiTextureType_UNKNOWN: %d\n", count);
+
+    if ( aiGetMaterialTexture( M, aiTextureType_LIGHTMAP, 0, &Path, &Mapping, &UVIndex, &Blend, &TextureOp, TextureMapMode, &TextureFlags) == AI_SUCCESS )
+    {
+        D.ambientOcclusionMap_ = addUnique(files, Path.C_Str());
+    }
+
+    if ( aiGetMaterialTexture( M, aiTextureType_UNKNOWN, 0, &Path, &Mapping, &UVIndex, &Blend, &TextureOp, TextureMapMode, &TextureFlags) == AI_SUCCESS )
+    {
+        D.metallicRoughnessMap_ = addUnique(files, Path.C_Str());
+    }
+
 	// first try tangent space normal map
 	if ( aiGetMaterialTexture( M, aiTextureType_NORMALS, 0, &Path, &Mapping, &UVIndex, &Blend, &TextureOp, TextureMapMode, &TextureFlags) == AI_SUCCESS )
 	{
@@ -691,7 +740,7 @@ int main()
 		processScene(cfg);
 
 	// Final step: optimize bistro scene
-	mergeBistro();
+//	mergeBistro();
 
 	return 0;
 }

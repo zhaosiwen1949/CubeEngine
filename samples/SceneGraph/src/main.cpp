@@ -15,7 +15,8 @@ struct MyApp: public CameraApp
 	: CameraApp(-95, -95)
 	, envMap(ctx_.resources.loadCubeMap("data/piazza_bologni_1k.hdr"))
 	, irrMap(ctx_.resources.loadCubeMap("data/piazza_bologni_1k_irradiance.hdr"))
-	, sceneData(ctx_, "data/meshes/test_graph.meshes", "data/meshes/test_graph.scene", "data/meshes/test_graph.materials", envMap, irrMap)
+//	, sceneData(ctx_, "data/meshes/test_graph.meshes", "data/meshes/test_graph.scene", "data/meshes/test_graph.materials", envMap, irrMap)
+    , sceneData(ctx_, "data/meshes/test_DamagedHelmet.meshes", "data/meshes/test_DamagedHelmet.scene", "data/meshes/test_DamagedHelmet.materials", envMap, irrMap)
 	, plane(ctx_)
 	, multiRenderer(ctx_, sceneData)
 	, imgui(ctx_)
@@ -49,7 +50,7 @@ struct MyApp: public CameraApp
 		const mat4 view =camera.getViewMatrix();
 
 		multiRenderer.setMatrices(p, view);
-//		plane.setMatrices(p, view, mat4(1.f));
+		plane.setMatrices(p, view, mat4(1.f));
 	}
 
 	void update(float deltaSeconds) override

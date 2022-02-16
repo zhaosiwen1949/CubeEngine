@@ -15,7 +15,8 @@ enum MaterialFlags
 
 constexpr const uint64_t INVALID_TEXTURE = 0xFFFFFFFF;
 
-struct PACKED_STRUCT MaterialDescription final
+//struct PACKED_STRUCT MaterialDescription final
+struct __attribute__((aligned (16))) MaterialDescription final
 {
 	gpuvec4 emissiveColor_ = { 0.0f, 0.0f, 0.0f, 0.0f};
 	gpuvec4 albedoColor_   = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -26,16 +27,22 @@ struct PACKED_STRUCT MaterialDescription final
 	float metallicFactor_     = 0.0f;
 	uint32_t flags_ = sMaterialFlags_CastShadow | sMaterialFlags_ReceiveShadow;
 	// maps
-	uint64_t ambientOcclusionMap_  = INVALID_TEXTURE;
-	uint64_t emissiveMap_          = INVALID_TEXTURE;
-	uint64_t albedoMap_            = INVALID_TEXTURE;
+//	uint64_t ambientOcclusionMap_  = INVALID_TEXTURE;
+//	uint64_t emissiveMap_          = INVALID_TEXTURE;
+//	uint64_t albedoMap_            = INVALID_TEXTURE;
+    uint32_t ambientOcclusionMap_  = INVALID_TEXTURE;
+    uint32_t emissiveMap_          = INVALID_TEXTURE;
+    uint32_t albedoMap_            = INVALID_TEXTURE;
 	/// Occlusion (R), Roughness (G), Metallic (B) https://github.com/KhronosGroup/glTF/issues/857
-	uint64_t metallicRoughnessMap_ = INVALID_TEXTURE;
-	uint64_t normalMap_            = INVALID_TEXTURE;
-	uint64_t opacityMap_           = INVALID_TEXTURE;
+//	uint64_t metallicRoughnessMap_ = INVALID_TEXTURE;
+//	uint64_t normalMap_            = INVALID_TEXTURE;
+//	uint64_t opacityMap_           = INVALID_TEXTURE;
+    uint32_t metallicRoughnessMap_ = INVALID_TEXTURE;
+    uint32_t normalMap_            = INVALID_TEXTURE;
+    uint32_t opacityMap_           = INVALID_TEXTURE;
 };
 
-static_assert(sizeof(MaterialDescription) % 16 == 0, "MaterialDescription should be padded to 16 bytes");
+//static_assert(sizeof(MaterialDescription) % 16 == 0, "MaterialDescription should be padded to 16 bytes");
 
 void saveMaterials(const char* fileName, const std::vector<MaterialDescription>& materials, const std::vector<std::string>& files);
 void loadMaterials(const char* fileName, std::vector<MaterialDescription>& materials, std::vector<std::string>& files);

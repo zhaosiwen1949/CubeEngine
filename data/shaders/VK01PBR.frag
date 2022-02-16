@@ -30,13 +30,20 @@ void main()
 {
 	MaterialData md = mat_bo.data[matIdx];
 
+	vec4 ao = vec4(1.0, 1.0, 1.0, 1.0);
 	vec4 emission = vec4(0.0, 0.0, 0.0, 0.0); // md.emissiveColor_;
 	vec4 albedo = md.albedoColor_;
 	vec3 normalSample = vec3(0.0, 0.0, 0.0);
+	vec4 mrSample = vec4(0.0, 1.0, 0.0, 0.0);
 
 	const int INVALID_HANDLE = 2000;
 
-	// fetch albedo
+	// 读取材质属性
+	if (md.ambientOcclusionMap_ < INVALID_HANDLE)
+	{
+		uint texIdx = uint(md.ambientOcclusionMap_);
+		ao = texture(textures[nonuniformEXT(texIdx)], uvw.xy);
+	}
 	if (md.emissiveMap_ < INVALID_HANDLE)
 	{
 		uint texIdx = uint(md.emissiveMap_);
@@ -52,10 +59,19 @@ void main()
 		uint texIdx = uint(md.normalMap_);
 		normalSample = texture(textures[nonuniformEXT(texIdx)], uvw.xy).xyz;
 	}
+	if (md.metallicRoughnessMap_ < INVALID_HANDLE)
+	{
+		uint texIdx = uint(md.metallicRoughnessMap_);
+		mrSample = texture(textures[nonuniformEXT(texIdx)], uvw.xy);
+	}
 
 	runAlphaTest(albedo.a, md.alphaTest_);
 
-	// world-space normal
+	// 颜色校正
+	emission.rgb = SRGBtoLINEAR(emission).rgb;
+	albedo.rgb = SRGBtoLINEAR(albedo).rgb;
+
+	// 计算法线
 	vec3 n = normalize(v_worldNormal);
 
 	// normal mapping: skip missing normal maps
@@ -64,12 +80,28 @@ void main()
 		n = perturbNormal(n, normalize(ubo.cameraPos.xyz - v_worldPos.xyz), normalSample, uvw.xy);
 	}
 
+	// 写死一个光照方向
 	vec3 lightDir = normalize(vec3(-1.0, -1.0, 0.1));
 
-	float NdotL = clamp( dot(n, lightDir), 0.3, 1.0 );
+	// 设置 PBR 渲染所需要的数据
+	PBRInfo pbrInputs;
 
-	n = normalize(n);
+	// image-based lighting
+	vec3 color = calculatePBRInputsMetallicRoughness(albedo, n, ubo.cameraPos.xyz, v_worldPos.xyz, mrSample, pbrInputs);
 
-//	outColor = vec4( albedo.rgb * NdotL + emission.rgb, 1.0 );
-	outColor = vec4( albedo.rgb, 1.0 );
+	// one hardcoded light source
+	color += calculatePBRLightContribution( pbrInputs, lightDir, vec3(1.0) );
+
+	// ambient occlusion
+	color = color * ( ao.r < 0.01 ? 1.0 : ao.r );
+
+	// emissive
+	color = pow( emission.rgb + color, vec3(1.0/2.2) );
+
+	outColor = vec4(color, 1.0);
+//	outColor = vec4(emission.rgb, 1.0);
+//	outColor = vec4(albedo.rgb, 1.0);
+//	outColor = vec4(n, 1.0);
+//	outColor = vec4(normalSample, 1.0);
+//	outColor = vec4(normalize(ubo.cameraPos.xyz - v_worldPos.xyz), 1.0);
 }

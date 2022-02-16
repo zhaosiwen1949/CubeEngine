@@ -861,11 +861,6 @@ bool initVulkanRenderDevice2WithCompute(VulkanInstance& vk, VulkanRenderDevice& 
 /* Combined initialization: all required rendering extensions for chapters 6,7,8,9 etc. with compute queue */
 bool initVulkanRenderDevice3(VulkanInstance& vk, VulkanRenderDevice& vkDev, uint32_t width, uint32_t height, const VulkanContextFeatures& ctxFeatures)
 {
-    VkPhysicalDeviceVulkan11Features physicalDeviceVulkan11Features = {
-            .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_1_FEATURES,
-            .shaderDrawParameters = VK_TRUE,
-    };
-
     VkPhysicalDeviceDescriptorIndexingFeaturesEXT physicalDeviceDescriptorIndexingFeatures = {
 		.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT,
 //		.pNext = &physicalDeviceVulkan11Features,
@@ -874,6 +869,12 @@ bool initVulkanRenderDevice3(VulkanInstance& vk, VulkanRenderDevice& vkDev, uint
 		.descriptorBindingVariableDescriptorCount = VK_TRUE,
 		.runtimeDescriptorArray = VK_TRUE,
 	};
+
+    VkPhysicalDeviceVulkan11Features physicalDeviceVulkan11Features = {
+            .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_1_FEATURES,
+            .pNext = &physicalDeviceDescriptorIndexingFeatures,
+            .shaderDrawParameters = VK_TRUE,
+    };
 
 	VkPhysicalDeviceFeatures deviceFeatures = {
 		/* for wireframe outlines */
@@ -897,6 +898,7 @@ bool initVulkanRenderDevice3(VulkanInstance& vk, VulkanRenderDevice& vkDev, uint
 	VkPhysicalDeviceFeatures2 deviceFeatures2 = {
 		.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2,
 		.pNext = &physicalDeviceDescriptorIndexingFeatures,
+//        .pNext = &physicalDeviceVulkan11Features,
 		.features = deviceFeatures  /*  */
 	};
 
@@ -1000,8 +1002,8 @@ bool isDeviceSuitable(VkPhysicalDevice device)
 	const bool isGPU = isDiscreteGPU || isIntegratedGPU;
 
 //	return isGPU && deviceFeatures.geometryShader;
-//    return isDiscreteGPU;
-    return isIntegratedGPU;
+    return isDiscreteGPU;
+//    return isIntegratedGPU;
 }
 
 SwapchainSupportDetails querySwapchainSupport(VkPhysicalDevice device, VkSurfaceKHR surface)
