@@ -120,10 +120,11 @@ struct VulkanRenderContext
 
 struct VulkanApp
 {
-	VulkanApp(int screenWidth, int screenHeight, const VulkanContextFeatures& ctxFeatures = VulkanContextFeatures())
+	VulkanApp(int screenWidth, int screenHeight, bool useImGui = false, const VulkanContextFeatures& ctxFeatures = VulkanContextFeatures())
 		: window_(initVulkanApp(screenWidth, screenHeight, &resolution_)),
 		ctx_(window_, resolution_.width, resolution_.height, ctxFeatures),
-		onScreenRenderers_(ctx_.onScreenRenderers_)
+		onScreenRenderers_(ctx_.onScreenRenderers_),
+		useImGui(useImGui)
 	{
 		glfwSetWindowUserPointer(window_, this);
 		assignCallbacks();
@@ -141,7 +142,7 @@ struct VulkanApp
 	void mainLoop();
 
 	// Check if none of the ImGui widgets were touched so our app can process mouse events
-	inline bool shouldHandleMouse() const { return !ImGui::GetIO().WantCaptureMouse; }
+	inline bool shouldHandleMouse() const { return useImGui ? !ImGui::GetIO().WantCaptureMouse : false; }
 
 	virtual void handleKey(int key, bool pressed) = 0;
 	virtual void handleMouseClick(int button, bool pressed)
@@ -172,6 +173,7 @@ protected:
 	VulkanRenderContext ctx_;
 	std::vector<RenderItem>& onScreenRenderers_;
 	FramesPerSecondCounter fpsCounter_;
+	bool useImGui;
 
 private:
 	void assignCallbacks();
@@ -181,8 +183,8 @@ private:
 
 struct CameraApp: public VulkanApp
 {
-	CameraApp(int screenWidth, int screenHeight, const VulkanContextFeatures& ctxFeatures = VulkanContextFeatures()):
-		VulkanApp(screenWidth, screenHeight, ctxFeatures),
+	CameraApp(int screenWidth, int screenHeight, bool useImGui = false, const VulkanContextFeatures& ctxFeatures = VulkanContextFeatures()):
+		VulkanApp(screenWidth, screenHeight, useImGui, ctxFeatures),
 
 		positioner(glm::vec3(0.0f, 5.0f, 10.0f), vec3(0.0f, 0.0f, -1.0f), vec3(0.0f, -1.0f, 0.0f)),
 		camera(positioner)

@@ -165,33 +165,58 @@ void VulkanRenderContext::composeFrame(VkCommandBuffer commandBuffer, uint32_t i
 
 void VulkanApp::assignCallbacks()
 {
-	glfwSetCursorPosCallback(
-		window_,
-		[](GLFWwindow* window, double x, double y)
-		{
-			ImGui::GetIO().MousePos = ImVec2((float)x, (float)y);
-			int width, height;
-			glfwGetFramebufferSize(window, &width, &height);
+    if(useImGui) {
+        glfwSetCursorPosCallback(
+                window_,
+                [](GLFWwindow* window, double x, double y)
+                {
+                    ImGui::GetIO().MousePos = ImVec2((float)x, (float)y);
+                    int width, height;
+                    glfwGetFramebufferSize(window, &width, &height);
 
-			void* ptr = glfwGetWindowUserPointer(window); 	
-			const float mx = static_cast<float>(x / width);
-			const float my = static_cast<float>(y / height);
-			reinterpret_cast<VulkanApp*>(ptr)->handleMouseMove(mx, my);
-		}
-	);
+                    void* ptr = glfwGetWindowUserPointer(window);
+                    const float mx = static_cast<float>(x / width);
+                    const float my = static_cast<float>(y / height);
+                    reinterpret_cast<VulkanApp*>(ptr)->handleMouseMove(mx, my);
+                }
+        );
 
-	glfwSetMouseButtonCallback(
-		window_,
-		[](GLFWwindow* window, int button, int action, int mods)
-		{
-			auto& io = ImGui::GetIO();
-			const int idx = button == GLFW_MOUSE_BUTTON_LEFT ? 0 : button == GLFW_MOUSE_BUTTON_RIGHT ? 2 : 1;
-			io.MouseDown[idx] = action == GLFW_PRESS;
+        glfwSetMouseButtonCallback(
+                window_,
+                [](GLFWwindow* window, int button, int action, int mods)
+                {
+                    auto& io = ImGui::GetIO();
+                    const int idx = button == GLFW_MOUSE_BUTTON_LEFT ? 0 : button == GLFW_MOUSE_BUTTON_RIGHT ? 2 : 1;
+                    io.MouseDown[idx] = action == GLFW_PRESS;
 
-			void* ptr = glfwGetWindowUserPointer(window); 	
-			reinterpret_cast<VulkanApp*>(ptr)->handleMouseClick(button, action == GLFW_PRESS);
-		}
-	);
+                    void* ptr = glfwGetWindowUserPointer(window);
+                    reinterpret_cast<VulkanApp*>(ptr)->handleMouseClick(button, action == GLFW_PRESS);
+                }
+        );
+    } else {
+        glfwSetCursorPosCallback(
+                window_,
+                [](GLFWwindow* window, double x, double y)
+                {
+                    int width, height;
+                    glfwGetFramebufferSize(window, &width, &height);
+
+                    void* ptr = glfwGetWindowUserPointer(window);
+                    const float mx = static_cast<float>(x / width);
+                    const float my = static_cast<float>(y / height);
+                    reinterpret_cast<VulkanApp*>(ptr)->handleMouseMove(mx, my);
+                }
+        );
+
+        glfwSetMouseButtonCallback(
+                window_,
+                [](GLFWwindow* window, int button, int action, int mods)
+                {
+                    void* ptr = glfwGetWindowUserPointer(window);
+                    reinterpret_cast<VulkanApp*>(ptr)->handleMouseClick(button, action == GLFW_PRESS);
+                }
+        );
+    }
 
 	glfwSetKeyCallback(
 		window_,
@@ -209,13 +234,15 @@ void VulkanApp::assignCallbacks()
 
 void VulkanApp::updateBuffers(uint32_t imageIndex)
 {
-	ImGuiIO& io = ImGui::GetIO();
-	io.DisplaySize = ImVec2((float)ctx_.vkDev.framebufferWidth, (float)ctx_.vkDev.framebufferHeight);
-	ImGui::NewFrame();
+	if(useImGui) {
+        ImGuiIO& io = ImGui::GetIO();
+        io.DisplaySize = ImVec2((float)ctx_.vkDev.framebufferWidth, (float)ctx_.vkDev.framebufferHeight);
+        ImGui::NewFrame();
 
-	drawUI();
+        drawUI();
 
-	ImGui::Render();
+        ImGui::Render();
+	}
 
 	draw3D();
 

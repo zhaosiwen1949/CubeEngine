@@ -1,7 +1,6 @@
 #include "framework/VulkanApp.h"
 #include "framework/GuiRenderer.h"
 #include "framework/MultiRenderer.h"
-#include "framework/QuadRenderer.h"
 #include "framework/InfinitePlaneRenderer.h"
 #include "framework/TriangleRenderer.h"
 
@@ -12,23 +11,21 @@
 struct MyApp: public CameraApp
 {
 	MyApp()
-	: CameraApp(-95, -95)
+	: CameraApp(-95, -95, true)
 	, envMap(ctx_.resources.loadCubeMap("data/piazza_bologni_1k.hdr"))
 	, irrMap(ctx_.resources.loadCubeMap("data/piazza_bologni_1k_irradiance.hdr"))
-//	, sceneData(ctx_, "data/meshes/test_graph.meshes", "data/meshes/test_graph.scene", "data/meshes/test_graph.materials", envMap, irrMap)
     , sceneData(ctx_, "data/meshes/test_DamagedHelmet.meshes", "data/meshes/test_DamagedHelmet.scene", "data/meshes/test_DamagedHelmet.materials", envMap, irrMap)
 	, plane(ctx_)
 	, multiRenderer(ctx_, sceneData)
 	, imgui(ctx_)
 	, triangleRenderer(ctx_)
 	{
-//		onScreenRenderers_.emplace_back(plane, false);
+		onScreenRenderers_.emplace_back(plane, false);
 		onScreenRenderers_.emplace_back(multiRenderer);
-//		onScreenRenderers_.emplace_back(imgui, false);
+		onScreenRenderers_.emplace_back(imgui, false);
 
-//        onScreenRenderers_.emplace_back(triangleRenderer);
-
-		sceneData.scene_.localTransform_[0] = glm::rotate(glm::mat4(1.f), (float)(M_PI / 2.f), glm::vec3(1.f, 0.f, 0.0f));
+        glm::mat4 tmpTransform = glm::rotate(glm::mat4(1.f), (float)(-1.f * M_PI / 2.f), glm::vec3(1.f, 0.f, 0.0f));
+        sceneData.scene_.localTransform_[0] = glm::rotate(tmpTransform, (float)(M_PI), glm::vec3(0.f, 0.f, 1.0f));
 	}
 
 	void drawUI() override {
